@@ -24,6 +24,6 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 			fmt.Println("Connected to database")
 		}
 	}
-	server.DB.Debug().AutoMigrate(&models.Product{}, &models.Supplier{})
+	server.DB.Debug().AutoMigrate(&models.Product{}, &models.Supplier{}, &models.Inbound{}, &models.InboundDetail{})
 
 }
