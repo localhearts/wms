@@ -1,13 +1,19 @@
 package seeds
 
-import "gorm.io/gorm"
+import (
+	"log"
+
+	"github.com/localhearts/wms/models"
+	"gorm.io/gorm"
+)
 
 func Load(db *gorm.DB) {
-	err := db.Debug().AutoMigrate(
-		&Supplier{},
-		&Product{},
-	)
+	err := db.Debug().Migrator().DropTable(&models.Product{}, &models.Supplier{}).Error
 	if err != nil {
-		panic(err)
+		log.Fatalf("cannot drop table: %v", err)
+	}
+	err = db.Debug().AutoMigrate(&models.Product{}, &models.Supplier{}).Error
+	if err != nil {
+		log.Fatalf("cannot migrate table: %v", err)
 	}
 }

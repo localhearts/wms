@@ -12,5 +12,7 @@ type Product struct {
 	SupplierID  *uint
 	Unit        string    `gorm:"type:varchar(50)"`
 	CreatedAt   time.Time `gorm:"autoCreateTime"`
+	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
+	DeletedAt   time.Time `gorm:"index"`
 	Supplier    Supplier  `gorm:"foreignKey:SupplierID"`
 }

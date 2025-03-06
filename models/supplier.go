@@ -12,4 +12,6 @@ type Supplier struct {
 	Email         string    `gorm:"type:varchar(255)"`
 	Address       string    `gorm:"type:varchar(255)"`
 	CreatedAt     time.Time `gorm:"autoCreateTime"`
+	UpdatedAt     time.Time `gorm:"autoUpdateTime"`
+	DeletedAt     time.Time `gorm:"index"`
 }
