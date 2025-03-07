@@ -8,11 +8,32 @@ import (
 )
 
 func Load(db *gorm.DB) {
-	err := db.Debug().Migrator().DropTable(&models.Product{}, &models.Supplier{}, &models.Inbound{}, &models.InboundDetail{}).Error
+	err := db.Debug().Migrator().DropTable(
+		&models.Product{},
+		&models.Supplier{},
+		&models.Warehouse{},
+		&models.Location{},
+		&models.Inbound{},
+		&models.InboundDetail{},
+		&models.Outbound{},
+		&models.OutboundDetail{},
+		&models.Stock{},
+		&models.Vas{}
+		).Error
 	if err != nil {
 		log.Fatalf("cannot drop table: %v", err)
 	}
-	err = db.Debug().AutoMigrate(&models.Product{}, &models.Supplier{}, &models.Inbound{}, &models.InboundDetail{}).Error
+	err = db.Debug().AutoMigrate(
+		&models.Product{},
+		&models.Supplier{},
+		&models.Warehouse{},
+		&models.Location{},
+		&models.Inbound{},
+		&models.InboundDetail{},
+		&models.Outbound{},
+		&models.OutboundDetail{},
+		&models.Stock{},
+		&models.Vas{}).Error
 	if err != nil {
 		log.Fatalf("cannot migrate table: %v", err)
 	}
