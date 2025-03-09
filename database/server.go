@@ -3,7 +3,6 @@ package database
 import (
 	"fmt"
 
-	"github.com/localhearts/wms/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -24,21 +23,5 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 			fmt.Println("Connected to database")
 		}
 	}
-	server.DB.Debug().AutoMigrate(
-		&models.Product{},
-		&models.Supplier{},
-		&models.Warehouse{},
-		&models.Location{})
-	server.DB.Debug().AutoMigrate(
-		&models.Inbound{},
-		&models.InboundDetail{},
-	)
-	server.DB.Debug().AutoMigrate(
-		&models.Vas{},
-		&models.Outbound{},
-		&models.OutboundDetail{},
-	)
-	server.DB.Debug().AutoMigrate(
-		&models.Stock{},
-	)
+
 }

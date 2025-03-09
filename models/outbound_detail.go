@@ -7,6 +7,6 @@ type OutboundDetail struct {
 	Quantity       int
 	PickedQuantity int      `gorm:"default:0"`
 	Status         string   `gorm:"type:enum('Pending','Picked','Packed');default:'Pending'"`
-	outbound       Outbound `gorm:"foreignKey:OutboundID"`
+	Outbound       Outbound `gorm:"foreignKey:OutboundID"`
 	Product        Product  `gorm:"foreignKey:ProductID"`
 }

@@ -8,33 +8,36 @@ import (
 )
 
 func Load(db *gorm.DB) {
-	err := db.Debug().Migrator().DropTable(
-		&models.Product{},
+	// Drop tables (order doesn't matter much when dropping)
+	tablesMigrate := []interface{}{
+		&models.Uom{},
+		&models.Category{},
+		&models.City{},
+		&models.Province{},
 		&models.Supplier{},
-		&models.Warehouse{},
-		&models.Location{},
-		&models.Inbound{},
-		&models.InboundDetail{},
-		&models.Outbound{},
-		&models.OutboundDetail{},
-		&models.Stock{},
-		&models.Vas{}
-		).Error
-	if err != nil {
-		log.Fatalf("cannot drop table: %v", err)
-	}
-	err = db.Debug().AutoMigrate(
 		&models.Product{},
-		&models.Supplier{},
+		&models.Customer{},
 		&models.Warehouse{},
-		&models.Location{},
-		&models.Inbound{},
-		&models.InboundDetail{},
-		&models.Outbound{},
-		&models.OutboundDetail{},
-		&models.Stock{},
-		&models.Vas{}).Error
-	if err != nil {
-		log.Fatalf("cannot migrate table: %v", err)
+		&models.Storage{},
+		&models.PurchaseOrder{},
+		&models.PurchaseOrderDetail{},
 	}
+
+	for _, table := range tablesMigrate {
+		if db.Migrator().HasTable(table) {
+			if err := db.Debug().Migrator().DropTable(table); err != nil {
+				panic(err)
+			}
+			log.Printf("Dropped table for model: %T", table)
+		}
+	}
+
+	// Migrate tables in proper dependency order.
+	// Note that Supplier must be created before Product (and any other models referencing it).
+
+	err := db.Debug().AutoMigrate(tablesMigrate...)
+	if err != nil {
+		panic(err)
+	}
+	log.Println("✅ Migration completed successfully.")
 }

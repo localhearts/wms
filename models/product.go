@@ -2,17 +2,33 @@ package models
 
 import (
 	"time"
+
+	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type Product struct {
-	ProductID   uint   `gorm:"primaryKey"`
-	ProductName string `gorm:"type:varchar(255);not null"`
-	SKU         string `gorm:"type:varchar(50);unique"`
-	Category    string `gorm:"type:varchar(100)"`
-	SupplierID  *uint
-	Unit        string    `gorm:"type:varchar(50)"`
-	CreatedAt   time.Time `gorm:"autoCreateTime"`
-	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
-	DeletedAt   time.Time `gorm:"index"`
-	Supplier    Supplier  `gorm:"foreignKey:SupplierID"`
+	ProductID   string         `gorm:"type:char(36);primaryKey;" json:"product_id"`
+	SupplierID  string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"supplier_id"`
+	UomID       string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"uom_id"`
+	CategoryID  string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"category_id"`
+	ProductName string         `gorm:"not null;unique" json:"product_name"`
+	SKU         string         `gorm:"not null;unique" json:"sku"`
+	ExpiryDate  *time.Time     `json:"expiry_date,omitempty"`
+	Length      float64        `gorm:"not null" json:"length"`
+	Width       float64        `gorm:"not null" json:"width"`
+	Height      float64        `gorm:"not null" json:"height"`
+	CreatedAt   time.Time      `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt   time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
+	DeletedAt   gorm.DeletedAt `gorm:"index" json:"deleted_at"`
+	Uoms        Uom            `gorm:"foreignKey:UomID;" json:"uom"`
+	Category    Category       `gorm:"foreignKey:CategoryID;" json:"category"`
+}
+
+// BeforeCreate hook to ensure UUID is generated
+func (p *Product) BeforeCreate(tx *gorm.DB) (err error) {
+	if p.ProductID == "" {
+		p.ProductID = uuid.New().String()
+	}
+	return
 }

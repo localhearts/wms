@@ -1,29 +1,7 @@
 
-type Warehouse struct {
-	ID        uint      `gorm:"primaryKey"`
-	Name      string    `gorm:"not null;unique"`
-	Location  string    `gorm:"not null"`
-	Area      float64   `gorm:"not null"`
-	Capacity  int       `gorm:"not null"`
-	Manager   string    `gorm:"not null"`
-	CreatedAt time.Time `gorm:"autoCreateTime"`
-	UpdatedAt time.Time `gorm:"autoUpdateTime"`
-	Storages  []Storage
-}
 
-type Storage struct {
-	ID          uint      `gorm:"primaryKey"`
-	WarehouseID uint      `gorm:"index"`
-	Location    string    `gorm:"not null"`
-	Rack        string    `gorm:"not null"`
-	Level       int       `gorm:"not null"`
-	Bin         int       `gorm:"not null"`
-	Capacity    int       `gorm:"not null"`
-	CurrentLoad int       `gorm:"not null"`
-	Temperature float64
-	CreatedAt   time.Time `gorm:"autoCreateTime"`
-	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
-}
+
+
 
 type CategoryProduct struct {
 	ID        uint      `gorm:"primaryKey"`
@@ -32,21 +10,7 @@ type CategoryProduct struct {
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }
 
-type Product struct {
-	ID              uint      `gorm:"primaryKey"`
-	Name            string    `gorm:"not null;unique"`
-	CategoryID      uint      `gorm:"index"`
-	SKU             string    `gorm:"unique;not null"`
-	Description     string
-	UnitOfMeasure   string    `gorm:"not null"`
-	Weight          float64   `gorm:"not null"`
-	Dimensions      string    `gorm:"not null"`
-	ExpiryDate      time.Time
-	ReorderLevel    int       `gorm:"not null"`
-	StockMovements  []StockMovement
-	CreatedAt       time.Time `gorm:"autoCreateTime"`
-	UpdatedAt       time.Time `gorm:"autoUpdateTime"`
-}
+
 
 type CycleCount struct {
 	ID          uint      `gorm:"primaryKey"`
@@ -162,3 +126,15 @@ type DeliveryOrder struct {
 	CreatedAt   time.Time `gorm:"autoCreateTime"`
 	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
 }   
+
+Route Planning (Perencanaan Rute)
+Optimasi rute pengiriman dilakukan berdasarkan faktor-faktor berikut:
+✅ Jarak & waktu tempuh tercepat
+✅ Kondisi lalu lintas & jalan (misal: jalan kecil, larangan truk)
+✅ Beban kendaraan & efisiensi bahan bakar
+✅ Jumlah drop point (multi-stop deliveries)
+
+Sistem dapat menggunakan metode seperti:
+📍 Shortest Path Algorithm → Menentukan rute tercepat berdasarkan jarak.
+📍 Vehicle Routing Problem (VRP) → Mengoptimalkan pengiriman multi-stop.
+📍 Time Window Routing → Menyesuaikan dengan jadwal penerimaan pelanggan.

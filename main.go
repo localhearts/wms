@@ -5,8 +5,12 @@ import (
 	"log"
 	"os"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/localhearts/wms/database"
+	"github.com/localhearts/wms/repository"
+	"github.com/localhearts/wms/routes"
+	"github.com/localhearts/wms/seeds"
 )
 
 func main() {
@@ -27,4 +31,13 @@ func main() {
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_NAME"),
 	)
+
+	seeds.Load(server.DB)
+	r := gin.Default()
+
+	inboundRepo := repository.InboundRepository{DB: server.DB}
+	routes.RegisterInboundRoutes(r, inboundRepo)
+
+	log.Fatal(r.Run(":8080"))
+
 }
