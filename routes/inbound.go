@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/localhearts/wms/controllers"
 	"github.com/localhearts/wms/repository"
@@ -9,7 +11,7 @@ import (
 func RegisterInboundRoutes(r *gin.Engine, repo repository.InboundRepository) {
 	ctrl := controllers.InboundController{InboundRepo: repo}
 
-	inbound := r.Group("/api/inbounds")
+	inbound := r.Group(os.Getenv("BASE_URL") + "/inbound")
 	{
 		inbound.POST("/", ctrl.CreateInbound)
 		inbound.GET("/", ctrl.GetAllInbounds)

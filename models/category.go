@@ -8,7 +8,7 @@ import (
 )
 
 type Category struct {
-	CategoryID   string         `gorm:"type:char(36);primaryKey;" json:"category_id"`
+	CategoryID   string         `gorm:"type:char(36);primaryKey;not null;" json:"category_id"`
 	CategoryName string         `gorm:"not null;unique" json:"category_name"`
 	CreatedAt    time.Time      `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt    time.Time      `gorm:"autoUpdateTime" json:"updated_at"`

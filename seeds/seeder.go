@@ -11,11 +11,11 @@ func Load(db *gorm.DB) {
 	// Drop tables (order doesn't matter much when dropping)
 	tablesMigrate := []interface{}{
 		&models.Uom{},
+		&models.Product{},
 		&models.Category{},
 		&models.City{},
 		&models.Province{},
 		&models.Supplier{},
-		&models.Product{},
 		&models.Customer{},
 		&models.Warehouse{},
 		&models.Storage{},
@@ -34,8 +34,8 @@ func Load(db *gorm.DB) {
 
 	// Migrate tables in proper dependency order.
 	// Note that Supplier must be created before Product (and any other models referencing it).
-
 	err := db.Debug().AutoMigrate(tablesMigrate...)
+
 	if err != nil {
 		panic(err)
 	}

@@ -10,7 +10,7 @@ import (
 type Product struct {
 	ProductID   string         `gorm:"type:char(36);primaryKey;" json:"product_id"`
 	SupplierID  string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"supplier_id"`
-	UomID       string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"uom_id"`
+	UomID       string         `gorm:"type:char(36);not null;index" json:"uom_id"`
 	CategoryID  string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"category_id"`
 	ProductName string         `gorm:"not null;unique" json:"product_name"`
 	SKU         string         `gorm:"not null;unique" json:"sku"`
@@ -21,8 +21,8 @@ type Product struct {
 	CreatedAt   time.Time      `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt   time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `gorm:"index" json:"deleted_at"`
-	Uoms        Uom            `gorm:"foreignKey:UomID;" json:"uom"`
-	Category    Category       `gorm:"foreignKey:CategoryID;" json:"category"`
+	Uom         Uom            `gorm:"references:UomID;" json:"uoms"`
+	Category    Category       `gorm:"references:CategoryID;" json:"categories"`
 }
 
 // BeforeCreate hook to ensure UUID is generated

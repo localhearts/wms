@@ -36,6 +36,11 @@ func main() {
 	r := gin.Default()
 
 	inboundRepo := repository.InboundRepository{DB: server.DB}
+	// buatkan saya main route untuk uoms
+	uomRepo := repository.NewUomRepository(server.DB)
+	routes.UomRoutes(r, uomRepo)
+	// buatkan saya main route untuk inbounds
+
 	routes.RegisterInboundRoutes(r, inboundRepo)
 
 	log.Fatal(r.Run(":8080"))
