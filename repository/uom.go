@@ -1,52 +1,46 @@
 package repository
 
 import (
-	"errors"
+	// Ganti dengan path package models Anda
 
 	"github.com/localhearts/wms/models"
-
 	"gorm.io/gorm"
 )
 
+// UomRepository mendefinisikan interface repository untuk Uom.
 type UomRepository interface {
-	Create(uom *models.Uom) error
-	GetByID(id string) (*models.Uom, error)
-	GetAll() ([]models.Uom, error)
-	Update(uom *models.Uom) error
-	Delete(id string) error
+	// GetDataTablesUom mengambil data Uom dengan parameter pagination, filtering, dan sorting.
+	GetDataTablesUom(start int, length int, searchValue string, orderBy string) (uoms []models.Uom, totalRecords int64, filteredRecords int64, err error)
 }
 
 type uomRepository struct {
-	db *gorm.DB
+	DB *gorm.DB
 }
 
+// NewUomRepository mengembalikan instance baru dari UomRepository.
 func NewUomRepository(db *gorm.DB) UomRepository {
-	return &uomRepository{db}
+	return &uomRepository{DB: db}
 }
 
-func (r *uomRepository) Create(uom *models.Uom) error {
-	return r.db.Create(uom).Error
-}
-
-func (r *uomRepository) GetByID(id string) (*models.Uom, error) {
-	var uom models.Uom
-	result := r.db.First(&uom, "uom_id = ?", id)
-	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		return nil, result.Error
+// GetDataTablesUom mengimplementasikan query DataTables.
+func (r *uomRepository) GetDataTablesUom(start int, length int, searchValue string, orderBy string) (uoms []models.Uom, totalRecords int64, filteredRecords int64, err error) {
+	// Hitung total data Uom tanpa filter.
+	if err = r.DB.Model(&models.Uom{}).Count(&totalRecords).Error; err != nil {
+		return
 	}
-	return &uom, result.Error
-}
 
-func (r *uomRepository) GetAll() ([]models.Uom, error) {
-	var uoms []models.Uom
-	result := r.db.Find(&uoms)
-	return uoms, result.Error
-}
+	// Siapkan query untuk filter.
+	query := r.DB.Model(&models.Uom{})
+	if searchValue != "" {
+		query = query.Where("uom_name LIKE ?", "%"+searchValue+"%")
+	}
 
-func (r *uomRepository) Update(uom *models.Uom) error {
-	return r.db.Save(uom).Error
-}
+	// Hitung data setelah filter.
+	if err = query.Count(&filteredRecords).Error; err != nil {
+		return
+	}
 
-func (r *uomRepository) Delete(id string) error {
-	return r.db.Delete(&models.Uom{}, "uom_id = ?", id).Error
+	// Ambil data dengan pengurutan, offset, dan limit.
+	err = query.Order(orderBy).Offset(start).Limit(length).Find(&uoms).Error
+	return
 }

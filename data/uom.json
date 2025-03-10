@@ -1,0 +1,143 @@
+[
+    {
+      "uom_id": "bca2ec56-3bcd-4f20-8b2e-9d5a6d7f1234",
+      "uom_name": "Piece",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "a1d2f3c4-b5e6-4a7f-9b0c-1d2e3f4a5b6c",
+      "uom_name": "Box",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "d1e2f3a4-b5c6-4d7e-8f9a-b1c2d3e4f5a6",
+      "uom_name": "Carton",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "e1f2a3b4-c5d6-4e7f-8a9b-c1d2e3f4a5b6",
+      "uom_name": "Pallet",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "f1e2d3c4-b5a6-4f8a-9b0c-1d2e3f4a5b6d",
+      "uom_name": "Kilogram",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "123e4567-e89b-12d3-a456-426614174000",
+      "uom_name": "Gram",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "234e5678-e89b-22d4-b567-526714184001",
+      "uom_name": "Liter",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "345e6789-e89b-32d5-c678-626814194002",
+      "uom_name": "Milliliter",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "456e7890-e89b-42d6-d789-7269141a5003",
+      "uom_name": "Dozen",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "567e8901-e89b-52d7-e890-8270141b6004",
+      "uom_name": "Set",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "678e9012-e89b-62d8-f901-9271141c7005",
+      "uom_name": "Roll",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "789e0123-e89b-72d9-a012-a271141d8006",
+      "uom_name": "Bottle",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "890e1234-e89b-82da-b123-b271141e9007",
+      "uom_name": "Pack",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "901e2345-e89b-92db-c234-c271141faa08",
+      "uom_name": "Bundle",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "012e3456-e89b-a2dc-d345-d271141fbb09",
+      "uom_name": "Sachet",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "112e4567-e89b-b2de-e456-e271141fcc10",
+      "uom_name": "Meter",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "212e5678-e89b-c2ef-f567-f271141fdc11",
+      "uom_name": "Centimeter",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "312e6789-e89b-d2f0-a678-0271141fea12",
+      "uom_name": "Inch",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "412e7890-e89b-e2f1-b789-1272141ffb13",
+      "uom_name": "Foot",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "uom_id": "512e8901-e89b-f2f2-c890-2273141ffc14",
+      "uom_name": "Sheet",
+      "created_at": "2025-03-09T12:00:00Z",
+      "updated_at": "2025-03-09T12:00:00Z",
+      "deleted_at": null
+    }
+  ]
+  

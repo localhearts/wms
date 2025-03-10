@@ -2,87 +2,80 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
+
+	// Ganti dengan path package repository Anda
 
 	"github.com/gin-gonic/gin"
-	"github.com/localhearts/wms/models"
 	"github.com/localhearts/wms/repository"
 )
 
+// DataTablesResponse adalah struktur respons yang sesuai dengan DataTables dan tambahan informasi pagination.
+type DataTablesResponse struct {
+	Draw            int         `json:"draw"`
+	RecordsTotal    int64       `json:"recordsTotal"`
+	RecordsFiltered int64       `json:"recordsFiltered"`
+	Data            interface{} `json:"data"`
+	TotalPage       int         `json:"totalPage"`
+	CurrentPage     int         `json:"currentPage"`
+}
+
+// UomController memiliki dependency ke repository Uom.
 type UomController struct {
 	repo repository.UomRepository
 }
 
+// NewUomController membuat instance baru UomController.
 func NewUomController(repo repository.UomRepository) *UomController {
-	return &UomController{repo}
+	return &UomController{repo: repo}
 }
 
-// CreateUom menangani pembuatan data Uom baru
-func (ctrl *UomController) CreateUom(c *gin.Context) {
-	var uom models.Uom
-	if err := c.ShouldBindJSON(&uom); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+// GetDataTablesUom menampilkan data Uom dengan pagination, pencarian, dan pengurutan.
+func (ctrl *UomController) GetDataTablesUom(c *gin.Context) {
+	// Ambil parameter dari query string.
+	draw, _ := strconv.Atoi(c.DefaultQuery("draw", "1"))
+	start, _ := strconv.Atoi(c.DefaultQuery("start", "0"))
+	length, _ := strconv.Atoi(c.DefaultQuery("length", "10"))
+	searchValue := c.Query("search[value]")
+
+	// Tentukan kolom pengurutan berdasarkan parameter DataTables.
+	orderColumn := c.DefaultQuery("order[0][column]", "1")
+	orderDir := c.DefaultQuery("order[0][dir]", "asc")
+	var orderBy string
+	// Misalnya, mapping kolom: 0 -> uom_id, 1 -> uom_name
+	switch orderColumn {
+	case "0":
+		orderBy = "uom_id"
+	case "1":
+		orderBy = "uom_name"
+	default:
+		orderBy = "uom_id"
 	}
+	orderBy = orderBy + " " + orderDir
 
-	if err := ctrl.repo.Create(&uom); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusCreated, uom)
-}
-
-// GetUom menampilkan data Uom berdasarkan ID
-func (ctrl *UomController) GetUom(c *gin.Context) {
-	id := c.Param("id")
-	uom, err := ctrl.repo.GetByID(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "UOM tidak ditemukan"})
-		return
-	}
-	c.JSON(http.StatusOK, uom)
-}
-
-// GetAllUom menampilkan semua data Uom
-func (ctrl *UomController) GetAllUom(c *gin.Context) {
-	uoms, err := ctrl.repo.GetAll()
+	// Panggil method repository untuk mengambil data.
+	uoms, totalRecords, filteredRecords, err := ctrl.repo.GetDataTablesUom(start, length, searchValue, orderBy)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, uoms)
-}
 
-// UpdateUom mengubah data Uom yang sudah ada
-func (ctrl *UomController) UpdateUom(c *gin.Context) {
-	id := c.Param("id")
-	existing, err := ctrl.repo.GetByID(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "UOM tidak ditemukan"})
-		return
+	// Hitung total halaman dan halaman saat ini
+	totalPage := 0
+	if length > 0 {
+		totalPage = int((filteredRecords + int64(length) - 1) / int64(length))
+	}
+	currentPage := (start / length) + 1
+
+	// Siapkan response sesuai format DataTables dengan tambahan pagination
+	response := DataTablesResponse{
+		Draw:            draw,
+		RecordsTotal:    totalRecords,
+		RecordsFiltered: filteredRecords,
+		Data:            uoms,
+		TotalPage:       totalPage,
+		CurrentPage:     currentPage,
 	}
 
-	// Bind data request ke object existing
-	if err := c.ShouldBindJSON(existing); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	// Pastikan ID tidak berubah
-	existing.UomID = id
-
-	if err := ctrl.repo.Update(existing); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, existing)
-}
-
-// DeleteUom menghapus data Uom berdasarkan ID
-func (ctrl *UomController) DeleteUom(c *gin.Context) {
-	id := c.Param("id")
-	if err := ctrl.repo.Delete(id); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"message": "UOM berhasil dihapus"})
+	c.JSON(http.StatusOK, response)
 }

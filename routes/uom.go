@@ -12,10 +12,6 @@ func UomRoutes(router *gin.Engine, repo repository.UomRepository) {
 	ctrl := controllers.NewUomController(repo)
 	uomGroup := router.Group(os.Getenv("BASE_URL") + "/uom")
 	{
-		uomGroup.POST("/", ctrl.CreateUom)
-		uomGroup.GET("/", ctrl.GetAllUom)
-		uomGroup.GET("/:id", ctrl.GetUom)
-		uomGroup.PUT("/:id", ctrl.UpdateUom)
-		uomGroup.DELETE("/:id", ctrl.DeleteUom)
+		uomGroup.GET("/", ctrl.GetDataTablesUom)
 	}
 }
