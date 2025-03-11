@@ -10,7 +10,7 @@ import (
 type Product struct {
 	ProductID   string         `gorm:"type:char(36);primaryKey;" json:"product_id"`
 	SupplierID  string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"supplier_id"`
-	UomID       string         `gorm:"type:char(36);not null;index" json:"uom_id"`
+	UomID       string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"uom_id"`
 	CategoryID  string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"category_id"`
 	ProductName string         `gorm:"not null;unique" json:"product_name"`
 	SKU         string         `gorm:"not null;unique" json:"sku"`

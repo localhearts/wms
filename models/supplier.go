@@ -22,8 +22,8 @@ type Supplier struct {
 	UpdatedAt     time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
 	DeletedAt     gorm.DeletedAt `gorm:"index" json:"deleted_at"` // Soft delete
 	Products      []Product      `gorm:"foreignKey:SupplierID" json:"products"`
-	City          City           `gorm:"foreignKey:CityID" json:"city"`
-	Province      Province       `gorm:"foreignKey:ProvinceID" json:"province"`
+	City          City           `gorm:"referances:CityID" json:"city"`
+	Province      Province       `gorm:"referances:ProvinceID" json:"province"`
 }
 
 // BeforeCreate untuk memastikan UUID digenerate jika belum ada

@@ -21,9 +21,9 @@ type Warehouse struct {
 	CreatedAt     time.Time      `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt     time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
 	DeletedAt     gorm.DeletedAt `gorm:"index" json:"deleted_at"`
-	City          City           `gorm:"foreignKey:CityID" json:"city"`
-	Province      Province       `gorm:"foreignKey:ProvinceID" json:"province"`
-	Storages      []Storage      `gorm:"foreignKey:WarehouseID" json:"storages"`
+	City          City           `gorm:"references:CityID;" json:"city"`
+	Province      Province       `gorm:"references:ProvinceID;" json:"province"`
+	Storages      []Storage      `gorm:"foreignKey:WarehouseID;" json:"storages"`
 }
 
 // BeforeCreate untuk memastikan UUID digenerate jika belum ada
