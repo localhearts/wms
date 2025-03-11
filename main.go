@@ -32,7 +32,9 @@ func main() {
 		os.Getenv("DB_NAME"),
 	)
 
-	seeds.Load(server.DB, "data/uom.json")
+	seeds.Load(server.DB)
+	seeds.SeedUom(server.DB, "./data/uom.json")
+	seeds.SeedCategory(server.DB, "./data/category.json")
 	r := gin.Default()
 
 	inboundRepo := repository.InboundRepository{DB: server.DB}
