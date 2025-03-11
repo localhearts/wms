@@ -26,7 +26,7 @@ func SeedCategory(db *gorm.DB, filename string) error {
 		return fmt.Errorf("gagal membaca file JSON: %w", err)
 	}
 
-	// Unmarshal JSON ke slice Uom
+	// Unmarshal JSON ke slice Category
 	var categories []models.Category
 	if err := json.Unmarshal(byteValue, &categories); err != nil {
 		return fmt.Errorf("gagal melakukan unmarshal data JSON: %w", err)
@@ -34,10 +34,10 @@ func SeedCategory(db *gorm.DB, filename string) error {
 
 	// Sisipkan data secara batch ke database
 	if err := db.Create(&categories).Error; err != nil {
-		return fmt.Errorf("gagal menyisipkan data UOM: %w", err)
+		return fmt.Errorf("gagal menyisipkan data Category Product: %w", err)
 	}
 
-	log.Println("✅ Seeding Uom completed successfully.")
+	log.Println("✅ Seeding Category Product completed successfully.")
 
 	return nil
 }

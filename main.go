@@ -35,11 +35,13 @@ func main() {
 	seeds.Load(server.DB)
 	seeds.SeedUom(server.DB, "./data/uom.json")
 	seeds.SeedCategory(server.DB, "./data/category.json")
+
 	r := gin.Default()
 
 	inboundRepo := repository.InboundRepository{DB: server.DB}
-	// buatkan saya main route untuk uoms
+	categoryRepo := repository.NewCatRepository(server.DB)
 	uomRepo := repository.NewUomRepository(server.DB)
+	routes.CategoryRoutes(r, categoryRepo)
 	routes.UomRoutes(r, uomRepo)
 	// buatkan saya main route untuk inbounds
 

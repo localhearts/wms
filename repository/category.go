@@ -18,12 +18,12 @@ type catRepository struct {
 }
 
 // NewUomRepository mengembalikan instance baru dari UomRepository.
-func NewCatRepository(db *gorm.DB) UomRepository {
-	return &uomRepository{DB: db}
+func NewCatRepository(db *gorm.DB) CategoryRepository {
+	return &catRepository{DB: db}
 }
 
 // GetDataTablesUom mengimplementasikan query DataTables.
-func (r *uomRepository) GetDataTablesCat(start int, length int, searchValue string, orderBy string) (uoms []models.Category, totalRecords int64, filteredRecords int64, err error) {
+func (r *catRepository) GetDataTablesCat(start int, length int, searchValue string, orderBy string) (uoms []models.Category, totalRecords int64, filteredRecords int64, err error) {
 	// Hitung total data Uom tanpa filter.
 	if err = r.DB.Model(&models.Category{}).Count(&totalRecords).Error; err != nil {
 		return
