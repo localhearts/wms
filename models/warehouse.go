@@ -9,8 +9,8 @@ import (
 
 type Warehouse struct {
 	WarehouseID   string         `gorm:"type:char(36);primaryKey;" json:"warehouse_id"`
-	WarehouseCode string         `gorm:"not null;unique" json:"warehouse_code"`
-	WarehouseName string         `gorm:"not null;" json:"warehouse_name"`
+	WarehouseCode string         `gorm:"type:varchar(255);not null;unique" json:"warehouse_code"`
+	WarehouseName string         `gorm:"type:varchar(255);not null;" json:"warehouse_name"`
 	Address       string         `gorm:"not null" json:"address"`
 	CityID        string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"city_id"`
 	ProvinceID    string         `gorm:"type:char(36);not null;index;constraint:OnDelete:CASCADE;" json:"province_id"`

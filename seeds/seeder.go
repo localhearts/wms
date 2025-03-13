@@ -24,6 +24,9 @@ func Load(db *gorm.DB) {
 		&models.PurchaseOrderDetail{},
 		&models.Inbound{},
 		&models.InboundDetail{},
+		&models.Vas{},
+		&models.DeliveryOrder{},
+		&models.DeliveryOrderDetail{},
 	}
 
 	for _, table := range tablesMigrate {

@@ -22,8 +22,8 @@ type InboundDetail struct {
 	UpdatedAt       time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
 	DeletedAt       gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 
-	Product Product `gorm:"references:ProductID" json:"product"`
-	Inbound Inbound `gorm:foreignKey:InboundID;references:InboundID" json:"inbound"`
+	Product Product `gorm:"references:ProductID;" json:"product"`
+	Inbound Inbound `gorm:"references:InboundID;" json:"inbound"`
 }
 
 // GetStatus returns the human-readable status string
